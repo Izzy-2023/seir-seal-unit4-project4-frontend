@@ -3,15 +3,15 @@
 **Summary**
 | Field | Detail |
 |-------|--------|
-| Project Name | I-Commerce Application|
-| Description | {One sentence summarizing what is the app and why it matters} |
+| Project Name | Tech Consulting Application|
+| Description | Tech consulting platform to browse for services and book appointments.  |
 | Developers | Izzy Zinxhirija |
 | Live Website |  |
 | Repo | https://github.com/Izzy-2023/seir-seal-unit4-project4-frontend |
 
 ## Problem Being Solved and Target Market
 
-The ecommerce app is a platform that enables users to browse, purchase, and manage products online. It offers a user-friendly interface for customers to view products, add them to a shopping cart, and securely complete transactions. The app also provides administrative tools for managing inventory, processing orders, and analyzing sales data,
+The tech consulting website provides a platform for customers to explore and book various consulting services offered. Customers can browse through a list of services, view detailed descriptions, and book appointments for specific services. The website also includes user authentication for customers to manage their bookings and an admin dashboard for managing services and appointments.
 
 ## User Stories
 
@@ -20,15 +20,15 @@ List of stories users should experience when using your application.
 - Users should be able to view the site on desktop and mobile
 - Users can create an account
 - Users can sign in to their account
-- Users can checkout a product
-- Users can create a product
-- Users can see all their items on the dashboard
-- Users can update their product information
-- User can delete products from the cart 
+- Users can buy a service
+- Admin can create a service
+- Admin can delete an appointment
+- Users can see all their services on the dashboard
+- Users can update their service information
+- User can delete their service 
+- User can book an appointment
 
 ## Component Architecture
-
-You can use the [Mermaid Markdown Syntax]() to create a chart of how the parts of your frontend website relate to each other. Units should represent components of your page. The following is an example you may see in a Single Page Application like a React App.
 
 ```mermaid
 flowchart LR
@@ -43,6 +43,13 @@ flowchart LR
 
 ## User Interface Mockups
 
-Use tooks like [Figma](https://www.figma.com/), [Mockflow](https://www.mockflow.com/) or [UXPIN](https://www.uxpin.com/). If you need inspiration visit a site like [Behance](https://www.behance.net/?tracking_source=typeahead_search_direct&search=web%20mockup). 
+### Main Page
+![Main_Page](https://i.imgur.com/P2Ar3uS.png)
 
-![Web Mockup](https://zippypixels.com/wp-content/uploads/2015/09/01-Free-perspective-website-mockup-824x542.jpg)
+### Services Page
+![Services_Page](https://i.imgur.com/NgG4TxO.png)
+
+### Login Page
+![Login_Page](https://i.imgur.com/nFIVKVr.png)
+
+
