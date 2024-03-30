@@ -47,7 +47,7 @@ flowchart LR
 ![Main_Page](https://i.imgur.com/P2Ar3uS.png)
 
 ### Services Page
-![Services_Page](https://i.imgur.com/NgG4TxO.png)
+![Services_Page](https://i.imgur.com/ySxMleT.png)
 
 ### Login Page
 ![Login_Page](https://i.imgur.com/nFIVKVr.png)
