@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ServiceList = () => {
-  const [services, setServices] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:8000/services/')
-      .then(response => response.json())
-      .then(data => setServices(data))
-      .catch(error => console.error('Error fetching services:', error));
-  }, []);
-
+const ServiceList = ({ services }) => {
   return (
     <div>
       <h2>Services</h2>
       {services.map(service => (
         <div key={service.id}>
-          <h3>{service.name}</h3>
+          <h3>
+            <Link to={`/services/${service.id}`}>{service.name}</Link>
+          </h3>
           <p>{service.description}</p>
           <p>Price: {service.price}</p>
-          <p>Duration: {service.duration}</p>
+          <Link to={`/services/${service.id}/book`}>Book Appointment</Link>
         </div>
       ))}
     </div>
@@ -26,3 +20,9 @@ const ServiceList = () => {
 };
 
 export default ServiceList;
+
+
+
+
+
+
