@@ -1,48 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ServiceDetail = () => {
     const { id } = useParams();
-    const [service, setService] = useState(null);
-    const [appointment, setAppointment] = useState(null);
+    const navigate = useNavigate();
+    const [service, setService] = useState({ name: '', description: '', price: '' });
 
     useEffect(() => {
         fetch(`http://localhost:8000/services/${id}/`)
             .then(response => response.json())
             .then(data => setService(data))
             .catch(error => console.error('Error fetching service:', error));
-
-        fetch(`http://localhost:8000/services/${id}/appointment/`)
-            .then(response => response.json())
-            .then(data => setAppointment(data))
-            .catch(error => console.error('Error fetching appointment:', error));
     }, [id]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setService(prevState => ({ ...prevState, [name]: value }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        fetch(`http://localhost:8000/services/${id}/`, {
+            method: 'PUT', // or 'PATCH'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(service),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Service updated successfully');
+            navigate(`/services/${id}`);
+        })
+        .catch(error => console.error('Error updating service:', error));
+    };
 
     return (
         <div>
-            {service ? (
-                <div>
-                    <h2>{service.name}</h2>
-                    <p>{service.description}</p>
-                    <p>Price: {service.price}</p>
-                </div>
-            ) : (
-                <p>Loading service...</p>
-            )}
-            {appointment ? (
-                <div>
-                    <h3>Appointment Details</h3>
-                    <p>Date: {appointment.appointment_date}</p>
-                    <p>Status: {appointment.status}</p>
-                </div>
-            ) : (
-                <p>Loading appointment...</p>
-            )}
+            <h2>Edit Service</h2>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" name="name" value={service.name} onChange={handleChange} required />
+                </label>
+                <label>
+                    Description:
+                    <textarea name="description" value={service.description} onChange={handleChange} required />
+                </label>
+                <label>
+                    Price:
+                    <input type="number" name="price" value={service.price} onChange={handleChange} required step="0.01" />
+                </label>
+                <button type="submit">Save Changes</button>
+            </form>
         </div>
     );
 };
 
 export default ServiceDetail;
+
+
+
 
 
 
