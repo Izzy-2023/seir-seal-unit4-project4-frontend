@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { TextField, Button, Typography, Container, Grid } from '@mui/material';
 
 const ServiceDetail = () => {
     const { id } = useParams();
@@ -28,7 +29,7 @@ const ServiceDetail = () => {
             body: JSON.stringify(service),
         })
         .then(response => response.json())
-        .then(data => {
+        .then(() => {
             alert('Service updated successfully');
             navigate(`/services/${id}`);
         })
@@ -36,28 +37,57 @@ const ServiceDetail = () => {
     };
 
     return (
-        <div>
-            <h2>Edit Service</h2>
+        <Container maxWidth="sm">
+            <Typography variant="h4" gutterBottom>Edit Service</Typography>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={service.name} onChange={handleChange} required />
-                </label>
-                <label>
-                    Description:
-                    <textarea name="description" value={service.description} onChange={handleChange} required />
-                </label>
-                <label>
-                    Price:
-                    <input type="number" name="price" value={service.price} onChange={handleChange} required step="0.01" />
-                </label>
-                <button type="submit">Save Changes</button>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Name"
+                            name="name"
+                            value={service.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Description"
+                            name="description"
+                            multiline
+                            rows={4}
+                            value={service.description}
+                            onChange={handleChange}
+                            required
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Price"
+                            name="price"
+                            type="number"
+                            value={service.price}
+                            onChange={handleChange}
+                            required
+                            InputProps={{
+                                step: 0.01,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button type="submit" variant="contained" color="primary">Save Changes</Button>
+                    </Grid>
+                </Grid>
             </form>
-        </div>
+        </Container>
     );
 };
 
 export default ServiceDetail;
+
 
 
 

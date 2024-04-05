@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Accordion, AccordionSummary, AccordionDetails, Button, Card, CardActions, CardContent, Grid, TextField, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ServiceList = () => {
     const [services, setServices] = useState([]);
@@ -8,15 +10,35 @@ const ServiceList = () => {
 
     useEffect(() => {
         fetch(`http://localhost:8000/services/`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch services');
-                }
-                return response.json();
+            .then(response => response.json())
+            .then(data => {
+                console.log("Services fetched:", data); // For debugging
+                setServices(data);
             })
-            .then(data => setServices(data))
-            .catch(error => console.error('Error fetching data: ', error));
+            .catch(error => console.error('Error fetching data:', error));
     }, []);
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setNewService({ ...newService, [name]: value });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        fetch(`http://localhost:8000/services/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newService),
+        })
+        .then(response => response.json())
+        .then(data => {
+            setServices([...services, data]);
+            setNewService({ name: '', description: '', price: '' }); // Reset form fields
+        })
+        .catch(error => console.error('Error adding new service:', error));
+    };
 
     const handleViewEditClick = (serviceId) => {
         navigate(`/services/${serviceId}`);
@@ -26,79 +48,73 @@ const ServiceList = () => {
         navigate(`/services/${serviceId}/book`);
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setNewService(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fetch(`http://localhost:8000/services/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newService),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to create service');
-            }
-            return response.json();
-        })
-        .then(data => {
-            setServices([...services, data]);
-            setNewService({ name: '', description: '', price: '' }); // Reset form
-        })
-        .catch(error => console.error('Error creating service:', error));
-    };
-
     return (
-        <div>
-            <h2>Services</h2>
-            <ul>
+        <>
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography>Add New Service</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            label="Name"
+                            name="name"
+                            value={newService.name}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            label="Description"
+                            name="description"
+                            value={newService.description}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            label="Price"
+                            name="price"
+                            type="number"
+                            value={newService.price}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <Button type="submit" variant="contained" color="primary">
+                            Add Service
+                        </Button>
+                    </form>
+                </AccordionDetails>
+            </Accordion>
+            <Grid container spacing={2}>
                 {services.map(service => (
-                    <li key={service.id}>
-                        <strong>{service.name}</strong> - {service.description} - ${service.price}
-                        <button onClick={() => handleViewEditClick(service.id)}>View/Edit</button>
-                        <button onClick={() => handleBookAppointmentClick(service.id)}>Book Appointment</button>
-                    </li>
+                    <Grid item xs={12} sm={6} md={4} key={service.id}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h5" component="div">
+                                    {service.name}
+                                </Typography>
+                                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                    ${service.price}
+                                </Typography>
+                                <Typography variant="body2">
+                                    {service.description}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small" onClick={() => handleViewEditClick(service.id)}>View/Edit</Button>
+                                <Button size="small" onClick={() => handleBookAppointmentClick(service.id)}>Book Appointment</Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
                 ))}
-            </ul>
-            <h3>Add New Service</h3>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    value={newService.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                    required
-                />
-                <input
-                    type="text"
-                    name="description"
-                    value={newService.description}
-                    onChange={handleChange}
-                    placeholder="Description"
-                    required
-                />
-                <input
-                    type="number"
-                    name="price"
-                    value={newService.price}
-                    onChange={handleChange}
-                    placeholder="Price"
-                    required
-                />
-                <button type="submit">Add Service</button>
-            </form>
-        </div>
+            </Grid>
+        </>
     );
 };
 
 export default ServiceList;
+
+
 
