@@ -12,7 +12,7 @@ const ServiceList = () => {
         fetch(`https://tech-consulting-backend.onrender.com/services/`)
             .then(response => response.json())
             .then(data => {
-                console.log("Services fetched:", data); // For debugging
+                console.log("Services fetched:", data);
                 setServices(data);
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -35,7 +35,7 @@ const ServiceList = () => {
         .then(response => response.json())
         .then(data => {
             setServices([...services, data]);
-            setNewService({ name: '', description: '', price: '' }); // Reset form fields
+            setNewService({ name: '', description: '', price: '' });
         })
         .catch(error => console.error('Error adding new service:', error));
     };
@@ -46,6 +46,22 @@ const ServiceList = () => {
 
     const handleBookAppointmentClick = (serviceId) => {
         navigate(`/services/${serviceId}/book`);
+    };
+
+    const handleDelete = (serviceId) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this service?');
+        if (confirmDelete) {
+            fetch(`https://tech-consulting-backend.onrender.com/services/${serviceId}/`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error deleting service');
+                }
+                setServices(services.filter(service => service.id !== serviceId));
+            })
+            .catch(error => console.error('Error deleting service:', error));
+        }
     };
 
     return (
@@ -105,6 +121,7 @@ const ServiceList = () => {
                             <CardActions>
                                 <Button size="small" onClick={() => handleViewEditClick(service.id)}>View/Edit</Button>
                                 <Button size="small" onClick={() => handleBookAppointmentClick(service.id)}>Book Appointment</Button>
+                                <Button size="small" color="error" onClick={() => handleDelete(service.id)}>Delete</Button>
                             </CardActions>
                         </Card>
                     </Grid>
@@ -115,6 +132,7 @@ const ServiceList = () => {
 };
 
 export default ServiceList;
+
 
 
 
