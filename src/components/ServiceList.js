@@ -9,7 +9,7 @@ const ServiceList = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:8000/services/`)
+        fetch(`https://tech-consulting-backend.onrender.com/services/`)
             .then(response => response.json())
             .then(data => {
                 console.log("Services fetched:", data); // For debugging
@@ -25,7 +25,7 @@ const ServiceList = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch(`http://localhost:8000/services/`, {
+        fetch(`https://tech-consulting-backend.onrender.com/services/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

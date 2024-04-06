@@ -8,7 +8,7 @@ const ServiceDetail = () => {
     const [service, setService] = useState({ name: '', description: '', price: '' });
 
     useEffect(() => {
-        fetch(`http://localhost:8000/services/${id}/`)
+        fetch(`https://tech-consulting-backend.onrender.com/services/${id}/`)
             .then(response => response.json())
             .then(data => setService(data))
             .catch(error => console.error('Error fetching service:', error));
@@ -21,7 +21,7 @@ const ServiceDetail = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:8000/services/${id}/`, {
+        fetch(`https://tech-consulting-backend.onrender.com/services/${id}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

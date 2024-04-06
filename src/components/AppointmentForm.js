@@ -14,7 +14,7 @@ const AppointmentForm = () => {
     useEffect(() => {
         const fetchServiceDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/services/${id}/`);
+                const response = await fetch(`https://tech-consulting-backend.onrender.com/services/${id}/`);
                 if (!response.ok) {
                     throw new Error('Service details could not be fetched.');
                 }
@@ -31,7 +31,7 @@ const AppointmentForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        const bookAppointmentUrl = `http://localhost:8000/services/${id}/book/`; 
+        const bookAppointmentUrl = `https://tech-consulting-backend.onrender.com/services/${id}/book/`; 
 
         // Adjusting keys to match Django model fields (snake_case)
         const appointmentDetails = {
