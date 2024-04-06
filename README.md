@@ -6,7 +6,7 @@
 | Project Name | Tech Consulting Application|
 | Description | Tech consulting platform to browse for services and book appointments.  |
 | Developers | Izzy Zinxhirija |
-| Live Website |  |
+| Live Website | https://seir-seal-unit4-project4-frontend.vercel.app/ |
 | Repo | https://github.com/Izzy-2023/seir-seal-unit4-project4-frontend |
 
 ## Problem Being Solved and Target Market
