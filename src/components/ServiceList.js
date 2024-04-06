@@ -96,7 +96,7 @@ const ServiceList = () => {
                                     {service.name}
                                 </Typography>
                                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                    ${service.price}
+                                    Price: ${service.price}
                                 </Typography>
                                 <Typography variant="body2">
                                     {service.description}

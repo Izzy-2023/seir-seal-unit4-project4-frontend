@@ -22,7 +22,7 @@ const ServiceDetail = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         fetch(`http://localhost:8000/services/${id}/`, {
-            method: 'PUT', // or 'PATCH'
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -31,7 +31,7 @@ const ServiceDetail = () => {
         .then(response => response.json())
         .then(() => {
             alert('Service updated successfully');
-            navigate(`/services/${id}`);
+            navigate('/');
         })
         .catch(error => console.error('Error updating service:', error));
     };
@@ -42,56 +42,24 @@ const ServiceDetail = () => {
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            label="Name"
-                            name="name"
-                            value={service.name}
-                            onChange={handleChange}
-                            required
-                        />
+                        <TextField fullWidth label="Name" name="name" value={service.name} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            label="Description"
-                            name="description"
-                            multiline
-                            rows={4}
-                            value={service.description}
-                            onChange={handleChange}
-                            required
-                        />
+                        <TextField fullWidth label="Description" name="description" multiline rows={4} value={service.description} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            label="Price"
-                            name="price"
-                            type="number"
-                            value={service.price}
-                            onChange={handleChange}
-                            required
-                            InputProps={{
-                                step: 0.01,
-                            }}
-                        />
+                        <TextField fullWidth label="Price" name="price" type="number" value={service.price} onChange={handleChange} required InputProps={{ step: 0.01, }} />
                     </Grid>
                     <Grid item xs={12}>
                         <Button type="submit" variant="contained" color="primary">Save Changes</Button>
                     </Grid>
                 </Grid>
             </form>
+            <Button variant="contained" color="primary" onClick={() => navigate('/')} sx={{ m: 2 }}>
+                Go Back
+            </Button>
         </Container>
     );
 };
 
 export default ServiceDetail;
-
-
-
-
-
-
-
-
